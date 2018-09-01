@@ -6,5 +6,5 @@
   "UniqueID": "Ilyaki.ArtifactSystemFixed",
   "EntryDll": "ArtifactSystemFixed.dll",
   "MinimumApiVersion": "2.7",
-  "UpdateKeys": []
+  "UpdateKeys": [ "Nexus:2761" ]
 }
