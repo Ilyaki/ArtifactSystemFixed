@@ -1,16 +1,16 @@
 {
-  "Name": "ArtifactSystemFixed",
-  "Author": "",
+  "Name": "Artifact System Fixed",
+  "Author": "Ilyaki",
   "Version": {
     "MajorVersion": 1,
     "MinorVersion": 0,
     "PatchVersion": 2,
     "Build": "0"
   },
-  "UniqueID": ".ArtifactSystemFixed",
-  "Description": "",
+  "UniqueID": "Ilyaki.ArtifactSystemFixed",
+  "Description": "A fairer artifact system",
   "MinimumApiLevel": "3.0.0",
   "PerSaveConfigs": false,
   "EntryDll": "ArtifactSystemFixed.dll",
-  "UpdateKeys": ["Nexus:5082"]
+  "UpdateKeys": ["Nexus:2761"]
 }

@@ -12,7 +12,7 @@
   <Target Name="ConfigureManifest" BeforeTargets="GenerateManifest">
     <PropertyGroup>
       <!-- Update keys for the mod manifest -->
-      <ModUpdateKeys>"Nexus:5082"</ModUpdateKeys>
+      <ModUpdateKeys>"Nexus:2761"</ModUpdateKeys>
     </PropertyGroup>
   </Target>
 </Project>
