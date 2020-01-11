@@ -1,52 +1,51 @@
-﻿using Harmony;
-using System;
+﻿using System.Reflection;
 using System.Linq;
-using System.Reflection;
+using Harmony;
+using System;
 
 namespace ArtifactSystemFixed
 {
-	abstract class Patch
-	{
-		protected abstract PatchDescriptor GetPatchDescriptor();
-		
-		protected class PatchDescriptor
-		{
-			public Type targetType;
-			public string targetMethodName;
-			public Type[] targetMethodArguments;
+    internal abstract class Patch
+    {
+        protected abstract PatchDescriptor GetPatchDescriptor();
 
-			/// <param name="targetType">Don't use typeof() or it won't work on other platforms</param>
-			/// <param name="targetMethodName">Null if constructor is desired</param>
-			/// <param name="targetMethodArguments">Null if no method abiguity</param>
-			public PatchDescriptor(Type targetType, string targetMethodName, Type[] targetMethodArguments = null)
-			{
-				this.targetType = targetType;
-				this.targetMethodName = targetMethodName;
-				this.targetMethodArguments = targetMethodArguments;
-			}
-		}
+        private void ApplyPatch(HarmonyInstance harmonyInstance)
+        {
+            var patchDescriptor = GetPatchDescriptor();
 
-		private void ApplyPatch(HarmonyInstance harmonyInstance)
-		{
-			var patchDescriptor = GetPatchDescriptor();
+            var targetMethod = string.IsNullOrEmpty(patchDescriptor.targetMethodName)
+                             ? (MethodBase) patchDescriptor.targetType.GetConstructor(patchDescriptor.targetMethodArguments)
+                             : patchDescriptor.targetMethodArguments != null
+                                 ? patchDescriptor.targetType.GetMethod(patchDescriptor.targetMethodName, patchDescriptor.targetMethodArguments)
+                                 : patchDescriptor.targetType.GetMethod(patchDescriptor.targetMethodName);
 
-			MethodBase targetMethod = String.IsNullOrEmpty(patchDescriptor.targetMethodName) ?
+            harmonyInstance.Patch(targetMethod, new HarmonyMethod(GetType().GetMethod("Prefix")),
+                                                new HarmonyMethod(GetType().GetMethod("Postfix")));
+        }
 
-				(MethodBase)patchDescriptor.targetType.GetConstructor(patchDescriptor.targetMethodArguments) :
+        public static void PatchAll(HarmonyInstance harmonyInstance)
+        {
+            var patches = Assembly.GetExecutingAssembly().GetTypes().Where(type => type.IsClass && type.BaseType == typeof(Patch));
 
-				targetMethod = patchDescriptor.targetMethodArguments != null ?
-					patchDescriptor.targetType.GetMethod(patchDescriptor.targetMethodName, patchDescriptor.targetMethodArguments)
-					: patchDescriptor.targetType.GetMethod(patchDescriptor.targetMethodName);
+            foreach (var patch in patches)
+                ((Patch) Activator.CreateInstance(patch)).ApplyPatch(harmonyInstance);
+        }
 
-			harmonyInstance.Patch(targetMethod, new HarmonyMethod(GetType().GetMethod("Prefix")), new HarmonyMethod(GetType().GetMethod("Postfix")));
-		}
+        protected class PatchDescriptor
+        {
+            public Type[] targetMethodArguments;
+            public string targetMethodName;
+            public Type targetType;
 
-		public static void PatchAll(HarmonyInstance harmonyInstance)
-		{
-			foreach (Type type in (from type in Assembly.GetExecutingAssembly().GetTypes()
-								   where type.IsClass && type.BaseType == typeof(Patch)
-								   select type))
-				((Patch)Activator.CreateInstance(type)).ApplyPatch(harmonyInstance);
-		}
-	}
+            /// <param name="targetType">Don't use typeof() or it won't work on other platforms</param>
+            /// <param name="targetMethodName">Null if constructor is desired</param>
+            /// <param name="targetMethodArguments">Null if no method ambiguity</param>
+            public PatchDescriptor(Type targetType, string targetMethodName, Type[] targetMethodArguments = null)
+            {
+                this.targetType = targetType;
+                this.targetMethodName = targetMethodName;
+                this.targetMethodArguments = targetMethodArguments;
+            }
+        }
+    }
 }
