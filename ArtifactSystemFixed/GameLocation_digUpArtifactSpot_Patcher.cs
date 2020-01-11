@@ -89,7 +89,7 @@ namespace ArtifactSystemFixed
 			{
 				toDigUpItemID = 102;
 			}
-			if (toDigUpItemID == 102 && who.archaeologyFound.ContainsKey(102) && ((Dictionary<int, int[]>)who.archaeologyFound)[102][0] >= 21)
+			if (toDigUpItemID == 102 && who.archaeologyFound.ContainsKey(102) && who.archaeologyFound[102][0] >= 21)
 			{
 				toDigUpItemID = 770;
 			}
@@ -155,7 +155,7 @@ namespace ArtifactSystemFixed
 					//Spawn the chosen item if it is an artifact. If not(e.g. clay), if the player found clay && magnifying glass && 11% chance then spawn secret note
 					if (Game1.objectInformation.ContainsKey(toDigUpItemID) && (Game1.objectInformation[toDigUpItemID].Split('/')[3].Contains("Arch") || toDigUpItemID == 102))
 					{
-						if (toDigUpItemID == 102 && who.archaeologyFound.ContainsKey(102) && ((Dictionary<int, int[]>)who.archaeologyFound)[102][0] >= 21)
+						if (toDigUpItemID == 102 && who.archaeologyFound.ContainsKey(102) && who.archaeologyFound[102][0] >= 21)
 						{
 							toDigUpItemID = 770;//Choose mixed seeds if the player already has every lost book
 						}
