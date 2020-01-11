@@ -1,12 +1,7 @@
 {
   "Name": "Artifact System Fixed",
   "Author": "Ilyaki",
-  "Version": {
-    "MajorVersion": 1,
-    "MinorVersion": 0,
-    "PatchVersion": 2,
-    "Build": "0"
-  },
+  "Version": "1.0.2",
   "UniqueID": "Ilyaki.ArtifactSystemFixed",
   "Description": "A fairer artifact system",
   "MinimumApiLevel": "3.0.0",
