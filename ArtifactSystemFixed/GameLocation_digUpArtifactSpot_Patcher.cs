@@ -43,12 +43,11 @@ namespace ArtifactSystemFixed
 				
 				if (itemInfo[3].Contains("Arch"))
 				{
-					/** Should be in the format of Mountain .03 Forest .03 BusStop .04
-					 * e.g. this would mean 3% in Mountain or Forest and 4% in BusStop 
-					 * 
-					 * Game1.objectInformation is incorrect for items with ids 579 to 589: line 6 is "Item 1 289" and the chances are on line 7 instead. This fixes that:
-					 */
-					string[] locationsAndItemsWeights = itemInfo[6].Contains("Item 1 289") ? itemInfo[7].Split(' ') : itemInfo[6].Split(' ');
+					/* Should be in the format of Mountain .03 Forest .03 BusStop .04
+                     * e.g. this would mean 3% in Mountain or Forest and 4% in BusStop
+                     * the erroneous artifact data was fixed in Stardew Valley 1.4
+                     */
+					var locationsAndItemsWeights = itemInfo[6].Split(' ');
 
 					for (int i = 0; i < locationsAndItemsWeights.Length; i += 2)
 					{
