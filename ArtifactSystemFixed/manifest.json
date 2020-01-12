@@ -1,10 +1,11 @@
-﻿{
-  "Name": "ArtifactSystemFixed",
+{
+  "Name": "Artifact System Fixed",
   "Author": "Ilyaki",
-  "Version": "1.0.1",
-  "Description": "Fixes bugs with the artifact system, and replaces the RNG drop system with weighted probabilities.",
+  "Version": "1.0.2",
   "UniqueID": "Ilyaki.ArtifactSystemFixed",
+  "Description": "A fairer artifact system",
+  "MinimumApiLevel": "3.0.0",
+  "PerSaveConfigs": false,
   "EntryDll": "ArtifactSystemFixed.dll",
-  "MinimumApiVersion": "2.8",
-  "UpdateKeys": [ "Nexus:2761" ]
+  "UpdateKeys": ["Nexus:2761"]
 }
